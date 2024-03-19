@@ -1,0 +1,144 @@
+﻿@model System.Data.DataTable ;
+@using System.Data;
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+
+<script src="~/lib/jquery/dist/jsc.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.css" />
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.js"></script>
+<!--
+<style>
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+        td.column_a {
+            width: 30%;
+        }
+
+        td.column_b {
+            width: 70%;
+        }
+
+    .styled-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+        .styled-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+            .styled-table tbody tr:nth-of-type(even) {
+                background-color: #f3f3f3;
+            }
+
+            .styled-table tbody tr:last-of-type {
+                border-bottom: 2px solid #009879;
+            }
+
+            .styled-table tbody tr.active-row {
+                font-weight: bold;
+                color: #009879;
+            }
+
+</style>
+
+-->
+
+<div class="text-center">
+    <h1 class="display-6">TRail Balance [ميزان المراجعة]</h1>
+    <p>RNR Oracle Egyption Alpha : Data Analysis Test Reports</p>
+</div>
+
+<div>
+    <form asp-action="Privacy" method="get">
+        <div class="form-actions no-color">
+            <p>
+                Find by Keyword: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                <input type="submit" value="Search" class="btn btn-default" /> |
+
+
+            </p>
+        </div>
+    </form>
+
+    <form method="post" asp-controller="Home" asp-action="ExportTRial">
+        <input type="submit" value="Export" />
+    </form>
+    @await Component.InvokeAsync("DataGrid",new { DTObject =  Model,ControllerName ="Home" ,ActionName= "Privacy" })
+
+
+
+</div>
+<script src="~/lib/jquery/dist/jsc.js"></script>
+<script src="~/lib/jquery/dist/datatable.js"></script>
+<script>
+    /*$(document).ready(function () {
+        $('#example').DataTable({
+            order: [[0, 'desc']],
+        });
+    });*/
+</script>
+
+<!--
+
+    <table id="example" class="styled-table">
+        <thead>
+            <tr>
+foreach (DataColumn colum in Model.Columns)
+{
+
+                        <td class="text-wrap">colum.ColumnName</td>
+
+
+}
+            </tr>
+        </thead>
+        <tbody>
+foreach (DataRow row in Model.Rows)
+{
+                    <tr>
+        foreach (DataColumn colum in Model.Columns)
+        {
+                                <td class="text-wrap">row[colum.ColumnName]</td>
+        }
+                    </tr>
+
+}
+        </tbody>
+    </table>
+
+-->
+

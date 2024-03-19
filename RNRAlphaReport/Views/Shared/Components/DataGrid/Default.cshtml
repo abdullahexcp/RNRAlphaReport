@@ -1,0 +1,111 @@
+﻿@using static RNRAlphaReport.Views.Components.DataGrid.DataGridViewComponent
+@using System.Data;
+@model GridObject;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<script src="~/lib/jquery/dist/jsc.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.css" />
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.js"></script>
+
+<style>
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+        td.column_a {
+            width: 30%;
+        }
+
+        td.column_b {
+            width: 70%;
+        }
+
+    .styled-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+        .styled-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+            .styled-table tbody tr:nth-of-type(even) {
+                background-color: #f3f3f3;
+            }
+
+            .styled-table tbody tr:last-of-type {
+                border-bottom: 2px solid #009879;
+            }
+
+            .styled-table tbody tr.active-row {
+                font-weight: bold;
+                color: #009879;
+            }
+
+</style>
+<div class="text-center">
+    <table id="example2" class="styled-table">
+        <thead>
+            <tr>
+                @foreach (DataColumn colum in Model.dt.Columns)
+                {
+
+                    <td class="text-wrap">@colum.ColumnName</td>
+
+
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DataRow row in Model.dt.Rows)
+            {
+                <tr>
+                    @foreach (DataColumn colum in  Model.dt.Columns)
+                    {
+                        <td class="text-wrap">@row[colum.ColumnName]</td>
+                    }
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#example2').DataTable({
+            order: [[0, 'desc']],
+        });
+    })
+</script>

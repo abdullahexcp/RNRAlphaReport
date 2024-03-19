@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RNRAlphaReport", "RNRAlphaReport\RNRAlphaReport.csproj", "{AED781D9-0C45-4736-8234-A21BF7FE1A70}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AED781D9-0C45-4736-8234-A21BF7FE1A70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AED781D9-0C45-4736-8234-A21BF7FE1A70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AED781D9-0C45-4736-8234-A21BF7FE1A70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AED781D9-0C45-4736-8234-A21BF7FE1A70}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2FB1C11E-FA71-4CF5-B831-356586CA8F82}
+	EndGlobalSection
+EndGlobal
