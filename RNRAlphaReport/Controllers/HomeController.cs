@@ -29,16 +29,17 @@ namespace RNRAlphaReport.Controllers
         public IActionResult Index(string? SearchString = null)
         {
             var allReports = reportBuilderService.GetAllReportsOrById();
-            var gen_ledgersReport = allReports.Where(a => a.Id == new Guid("{C242E675-D4E5-EE11-88A6-000D3AB06F75}")).FirstOrDefault();
+            var gen_ledgersReport = allReports.Where(a => a.Id == new Guid("{00BBF195-CEF0-EE11-88A8-000D3AB06F75}")).FirstOrDefault();
             if (gen_ledgersReport == null)
                 return NotFound();
+            reportBuilderService.PopulateGetReportParams(gen_ledgersReport);
 
             foreach (var param in gen_ledgersReport.Parameters)
             {
                 if (param.Key.ToLower() == "size")
-                    param.Value = 10;
+                    param.Value = 1000;
                 else if (param.Key.ToLower() == "searchkey")
-                    param.Value = "%";
+                    param.Value = $"%{SearchString}%";
             }
             var datatable = reportBuilderService.GetReportData(gen_ledgersReport);
             return View(datatable);

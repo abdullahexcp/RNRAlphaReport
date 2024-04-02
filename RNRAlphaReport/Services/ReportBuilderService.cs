@@ -33,13 +33,13 @@ namespace RNRAlphaReport.Services
                             r.new_category categoryId,
                             c.new_name categoryName,
                             r.new_querytype queryType,
-                            d.new_dataprovider dataProviderId,
-                            d.new_dataprovider dataProviderName,
+                            d.new_customreportproviderId dataProviderId,
+                            d.new_name dataProviderName,
                             r.new_reportquery reportQuery
 
                         from new_customreportds r 
                         join new_customreportsdscategory c on r.new_category = c.new_customreportsdscategoryid 
-                        join new_customreportprovider d on r.new_dataprovider = d.new_customreportprovider
+                        join new_customreportprovider d on r.new_dataprovider = d.new_customreportproviderId
                           
                         where r.statecode = 0" + (Id != null ? $" and new_customreportdsid = '{Id}'" : string.Empty);
 
@@ -56,7 +56,7 @@ namespace RNRAlphaReport.Services
                     CategoryId = row["categoryId"] != null ? new Guid(row["categoryId"].ToString()) : null,
                     CategoryName = row["categoryName"].ToString(),
                     DataProviderId = row["dataProviderId"].ToString(),
-                    DataProviderName = row["dataProviderName "].ToString(),
+                    DataProviderName = row["dataProviderName"].ToString(),
                     QueryType = row["queryType"] != null ? (ReportBuilderQueryTypes)(int)row["queryType"] : null,
                     ReportQuery = row["reportQuery"].ToString()
                 });
@@ -68,16 +68,17 @@ namespace RNRAlphaReport.Services
         public ReportBuilder PopulateGetReportParams(ReportBuilder reportBuilder)
         {
             var query = @"select 
-                            p.new_nameparameter Name,
-                            p.new_name Key,
-                            p.new_type Type,
-                            p.new_order Order,
-                            p.new_section SectionId
+                            p.new_customreportdsparameterid [Id],
+							p.new_nameparameter [Name],
+                            p.new_name [Key],
+                            p.new_type [Type],
+                            p.new_order [Order],
+                            p.new_section [SectionId]
 
-                        from new_new_customreportds_new_customreportdspara rp
-                        join new_customreportdsparameter p on rp.new_customreportdsid = p.new_customreportdsparameterid
+                        from new_new_customreportds_new_customreportdspa rp
+                        join new_customreportdsparameter p on rp.new_customreportdsparameterid = p.new_customreportdsparameterid
                         
-                        where r.statecode = 0 and rp.new_customreportdsid = '" + reportBuilder.Id + "'";
+                        where p.statecode = 0 and rp.new_customreportdsid = '" + reportBuilder.Id + "'";
 
             var connString = settingsService.GetConnectionString("RNR_CRM_ConnString");
 
@@ -89,7 +90,7 @@ namespace RNRAlphaReport.Services
                 {
                     Id = new Guid(row["Id"].ToString()),
                     Name = row["Name"].ToString(),
-                    SectionId = row["SectionId"] != null ? new Guid(row["SectionId"].ToString()) : null,
+                    SectionId = !string.IsNullOrEmpty(row["SectionId"].ToString()) ? new Guid(row["SectionId"].ToString()) : null,
                     Key = row["Key"].ToString(),
                     Order = (int)row["Order"],
                     Type = row["Type"] != null ? (ReportBuilderParamTypes)(int)row["Type"] : null,
@@ -104,8 +105,6 @@ namespace RNRAlphaReport.Services
 
         public DataTable GetReportData(ReportBuilder reportBuilder)
         {
-            reportBuilder = PopulateGetReportParams(reportBuilder);
-
             var reportConnString = settingsService.GetConnectionString(reportBuilder.DataProviderName);
 
             var datatable = databaseUtil.ExecuteQuery(reportConnString, reportBuilder.ReportQuery, reportBuilder.ParametersAsDictionary);
